@@ -92,12 +92,9 @@ namespace SpinnakerTest
 
         private bool _usecheckbox = false;
 
+        // 이미지 저장 경로 
         private string savepath = @"D:\MDS_Save";
 
-        private int _roix = 0;
-        private int _roiy = 0;
-        private int _roiwidth = 0;
-        private int _roiheight = 0;
         #endregion
 
         #region PUBLIC
@@ -172,7 +169,7 @@ namespace SpinnakerTest
                 mHeight = nHeight;
             }
 
-            public bool MeasureBoxValueChange(int nX, int nY, int nWidth, int nHeight)
+            public void MeasureBoxValueChange(int nX, int nY, int nWidth, int nHeight)
             {
                 try
                 {
@@ -180,16 +177,11 @@ namespace SpinnakerTest
                     mY = nY;
                     mWidth = nWidth;
                     mHeight = nHeight;
-
-                    return true; 
                 }
                 catch(Exception ex)
                 {
                     Console.WriteLine(ex);
-                    return false; 
                 }
-              
-
             }
             public void ResetMinMax()
             {
@@ -292,15 +284,15 @@ namespace SpinnakerTest
             gridControl = new PropertyGridControl();
             Grid.SetRow(gridControl, 1);
 
-            maxSpot = new MeasureSpotValue(System.Drawing.Color.White);
-            minSpot = new MeasureSpotValue(System.Drawing.Color.Yellow);
+            maxSpot = new MeasureSpotValue(System.Drawing.Color.Red);
+            minSpot = new MeasureSpotValue(System.Drawing.Color.LightSkyBlue);
 
             Palette_ComboBox_Initialize();
 
             CheckBox.IsChecked = true; 
             ScaleSetting.IsEnabled = false;
 
-            //Ther_Image.
+            
         }
 
         private void Window_Closed(object sender, EventArgs e)
@@ -413,8 +405,8 @@ namespace SpinnakerTest
                 isRunning = true;
                 SetROIBox.IsEnabled = true;
                 ROIBox_Change.IsEnabled = false;
-                ROIChange.IsEnabled = false; 
-
+                ROIChange.IsEnabled = false;
+                SaveJpegButton.IsEnabled = true; 
 
                 Console.Write("\tDevice {0} ", 0);
                
@@ -631,7 +623,8 @@ namespace SpinnakerTest
                 isRunning = false;
                 SetROIBox.IsEnabled = false;
                 ROIBox_Change.IsEnabled = false; 
-                ROIChange.IsEnabled = false; 
+                ROIChange.IsEnabled = false;
+                SaveJpegButton.IsEnabled = false;
 
                 if (cam.IsStreaming())
                 {
@@ -1451,10 +1444,10 @@ namespace SpinnakerTest
         {
             try
             {
-                _roix = int.Parse(ROI_X.Text);
-                _roiy = int.Parse(ROI_Y.Text);
-                _roiwidth = int.Parse(ROI_Width.Text);
-                _roiheight = int.Parse(ROI_Height.Text);
+                int _roix = int.Parse(ROI_X.Text);
+                int _roiy = int.Parse(ROI_Y.Text);
+                int _roiwidth = int.Parse(ROI_Width.Text);
+                int _roiheight = int.Parse(ROI_Height.Text);
 
                 if (0 > _roix || _roix >= mCurWidth || 0 > _roiy || _roiy >= mCurHeight || 0 > _roiwidth || (_roix + _roiwidth) > mCurWidth || 0 > _roiheight || (_roiy + _roiheight) > mCurHeight)
                 {
@@ -1467,7 +1460,8 @@ namespace SpinnakerTest
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex); 
+               MessageBox.Show(String.Format("입력한 값이 올바르지 않습니다. ")); 
+               Console.WriteLine(ex); 
             }
         }
 
@@ -1475,7 +1469,6 @@ namespace SpinnakerTest
         #endregion
 
         #region STEP4 - 02. JPEG SAVE
-
         
         private void SaveJpegButton_Click(object sender, RoutedEventArgs e)
         {
@@ -1500,5 +1493,10 @@ namespace SpinnakerTest
         }
         #endregion
 
+        //private void SaveAVIButton_Click(object sender, RoutedEventArgs e)
+        //{
+            
+         
+        //}
     }
 }

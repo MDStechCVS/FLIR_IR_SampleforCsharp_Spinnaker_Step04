@@ -29,9 +29,6 @@
 
         <Grid x:Name="Image" Grid.Column="0"  Grid.Row="1" Grid.RowSpan="3" Margin="30" Background="AliceBlue">
             <Canvas x:Name="Ther_Image">
-                <!--PreviewMouseLeftButtonDown="UserControl_PreviewMouseLeftButtonDown" 
-             PreviewMouseMove="UserControl_PreviewMouseMove" 
-             PreviewMouseRightButtonDown="UserControl_PreviewMouseRightButtonDown">-->
                 <Canvas.Background >
                     <ImageBrush x:Name="backgroundImageBrush" 
                         Stretch="Uniform" >
@@ -118,7 +115,8 @@
             <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="1" Margin="20,-25,0,0" >
                 
                 <StackPanel Orientation="Horizontal" Margin="10, 5, 5, 5">
-                    <Button Content="JPEG"  Width="50" Height="40" Name="SaveJpegButton" ToolTip="Save JPEG" Click="SaveJpegButton_Click"></Button>
+                    <Button Content="JPEG"  Width="50" Height="40" Name="SaveJpegButton" ToolTip="Save JPEG" Click="SaveJpegButton_Click" IsEnabled="False"></Button>
+                    <!--<Button Content="AVI"  Width="50" Height="40" Name="SaveAVIButton" ToolTip="Save JPEG" Click="SaveAVIButton_Click"></Button>-->
                 </StackPanel>
             </StackPanel>
         </Grid>
