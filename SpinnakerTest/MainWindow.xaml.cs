@@ -173,6 +173,7 @@ namespace SpinnakerTest
             {
                 try
                 {
+                    // ROI 영역의 위치 및 크기 값을 변경 
                     mX = nX;
                     mY = nY;
                     mWidth = nWidth;
@@ -291,7 +292,6 @@ namespace SpinnakerTest
 
             CheckBox.IsChecked = true; 
             ScaleSetting.IsEnabled = false;
-
             
         }
 
@@ -1438,30 +1438,33 @@ namespace SpinnakerTest
         #endregion
 
         #region STEP4 - 01. ROI CHANGE
-
-       
+        
+        
         private void ROIBox_Change_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                // 입력한 값을 Int형으로 변환하여 저장 
                 int _roix = int.Parse(ROI_X.Text);
                 int _roiy = int.Parse(ROI_Y.Text);
                 int _roiwidth = int.Parse(ROI_Width.Text);
                 int _roiheight = int.Parse(ROI_Height.Text);
 
+                // 입력한 값이 올바르지 않은 경우
                 if (0 > _roix || _roix >= mCurWidth || 0 > _roiy || _roiy >= mCurHeight || 0 > _roiwidth || (_roix + _roiwidth) > mCurWidth || 0 > _roiheight || (_roiy + _roiheight) > mCurHeight)
                 {
                     MessageBox.Show(String.Format("입력한 값이 올바르지 않습니다. \n X : 0 ~ {0}, Y : 0 ~ {1}", mCurWidth, mCurHeight));
                     return; 
                 }
 
+                // ROI 영역의 위치 및 크기 변경 
                 roiBox.MeasureBoxValueChange(_roix, _roiy, _roiwidth, _roiheight ); 
                 
             }
             catch(Exception ex)
             {
-               MessageBox.Show(String.Format("입력한 값이 올바르지 않습니다. ")); 
-               Console.WriteLine(ex); 
+                MessageBox.Show(String.Format("입력한 값이 올바르지 않습니다. \n X : 0 ~ {0}, Y : 0 ~ {1}", mCurWidth, mCurHeight));
+                Console.WriteLine(ex); 
             }
         }
 
@@ -1470,17 +1473,20 @@ namespace SpinnakerTest
 
         #region STEP4 - 02. JPEG SAVE
         
+        // 이미지 저장 
         private void SaveJpegButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 DateTime now = DateTime.Now;
 
+                // 저장 경로 
                 string path = string.Format(@"{0}\{1}년{2}월{3}일\", savepath, now.Year, now.Month, now.Day);
-                DirectoryInfo di = new DirectoryInfo(path); 
 
+                DirectoryInfo di = new DirectoryInfo(path); 
                 if(di.Exists == false)
                 {
+                    // 저장 경로가 존재하지 않는 경우 해당 경로를 생성  
                     di.Create(); 
                 }
                 
